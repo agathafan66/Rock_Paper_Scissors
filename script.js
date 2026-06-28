@@ -67,20 +67,40 @@ function playRound(humanChoice, computerChoice) {
 function playGame() {
 
 
-    for (i=0; i<5; i++) {
-        let computerSelection= getComputerChoice();
-        let humanSelection=getHumanChoice();
+    // for (i=0; i<5; i++) {
+        
+        // const btnGroup=document.querySelector('#button-container');
+        // btnGroup.addEventListener('click',(e) => {
+        //     let humanSelection=e.target.textContent;
+        //     console.log(humanSelection);
+        // })
+    
         playRound(humanSelection, computerSelection);
-    }
+    // }
 }
-
+// Create three buttons, one for each selection. Add an event listener to the buttons that call your playRound function with the correct playerSelection every time a button is clicked. (you can keep the console.logs for this step)
 let humanScore=0;
 let computerScore=0;
-playGame();
-console.log(`Your Score is ${humanScore}`);
-if (computerScore > humanScore) {
-    console.log('You lose the game')
-} else if(computerScore < humanScore) {
-    console.log('You Win the game!');
-} else console.log('It\'s a tie');
+
+const btnGroup=document.querySelector('#button-container');
+const resultDiv=document.createElement('div');
+resultDiv.id='result'; //方便之後以id來設定CSS或找到此div
+btnGroup.after(resultDiv);
+
+btnGroup.addEventListener('click',(e) => {
+    let humanSelection=e.target.textContent.toUpperCase();
+    // console.log(humanSelection);
+    let computerSelection= getComputerChoice();
+    resultDiv.textContent=`You chose ${humanSelection}, computer chose ${computerSelection}.`;
+    
+    playRound(humanSelection, computerSelection);
+})
+
+
+// console.log(`Your Score is ${humanScore}`);
+// if (computerScore > humanScore) {
+//     console.log('You lose the game')
+// } else if(computerScore < humanScore) {
+//     console.log('You Win the game!');
+// } else console.log('It\'s a tie');
 
