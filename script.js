@@ -23,39 +23,65 @@ function getHumanChoice() {
 function playRound(humanChoice, computerChoice) {
     let play=["ROCK", "SCISSOR", "PAPER"];
     if (humanChoice==computerChoice) {
+        resultDiv.textContent=`You chose ${humanChoice}, computer chose ${computerChoice}, It's tied`;
         return console.log("It's tied");
     } 
     switch (computerChoice) {
         case "ROCK":
             if (humanChoice=="SCISSOR") {
-                console.log("You lose! Rock beats Scissor")
+                resultDiv.textContent="You lose! Rock beats Scissor";
+                console.log("You lose! Rock beats Scissor");
                 computerScore += 1;
+                if (computerScore>=5) {
+                    finalScore.textContent=`Your Score is ${humanScore}, You lost.`
+                    log.console(humanScore);
+                }
                 break;
             } else {
+                resultDiv.textContent="You win! Paper beats Rock.";
                 console.log("You win! Paper beats Rock.");
                 humanScore += 1;
+                if (computerScore>=5) {
+                    finalScore.textContent=`Your Score is ${humanScore}, You Win.`
+                }
                 break;
             }
             
         case "PAPER":
             if (humanChoice=="ROCK") {
+                resultDiv.textContent="You lose! Paper beats Rock";
                 console.log("You lose! Paper beats Rock")
                 computerScore += 1;
+                if (computerScore>=5) {
+                    finalScore.textContent=`Your Score is ${humanScore}, You lost.`
+                }
                 break;
             } else {
+                resultDiv.textContent="You win! Scissor beats Paper.";
                 console.log("You win! Scissor beats Paper.");
                 humanScore += 1;
+                if (computerScore>=5) {
+                    finalScore.textContent=`Your Score is ${humanScore}, You Win.`
+                }
                 break;
             }
 
         case "SCISSOR":
              if (humanChoice=="ROCK") {
+                resultDiv.textContent="You win! Rock beats Scissor.";
                 console.log("You win! Rock beats Scissor.");
                 humanScore += 1;
+                if (computerScore>=5) {
+                    finalScore.textContent=`Your Score is ${humanScore}, You win.`
+                }
                 break;
             } else {
+                resultDiv.textContent="You lose! Scissor beats Paper.";
                 console.log("You lose! Scissor beats Paper.");
                 computerScore += 1;
+                if (computerScore>=5) {
+                    finalScore.textContent=`Your Score is ${humanScore}, You lost.`
+                }
                 break;
             }
           
@@ -84,15 +110,19 @@ let computerScore=0;
 
 const btnGroup=document.querySelector('#button-container');
 const resultDiv=document.createElement('div');
+const finalScore=document.createElement('p');
+
 resultDiv.id='result'; //方便之後以id來設定CSS或找到此div
 btnGroup.after(resultDiv);
+resultDiv.appendChild(finalScore);
+
 
 btnGroup.addEventListener('click',(e) => {
     let humanSelection=e.target.textContent.toUpperCase();
     // console.log(humanSelection);
     let computerSelection= getComputerChoice();
     resultDiv.textContent=`You chose ${humanSelection}, computer chose ${computerSelection}.`;
-    
+
     playRound(humanSelection, computerSelection);
 })
 
