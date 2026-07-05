@@ -29,58 +29,64 @@ function playRound(humanChoice, computerChoice) {
     switch (computerChoice) {
         case "ROCK":
             if (humanChoice=="SCISSOR") {
+                computerScore += 1;
                 showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You lose! Rock beats Scissor.`);
                 console.log("You lose! Rock beats Scissor");
-                computerScore += 1;
-                if (computerScore>=5) {
-                    finalScore.textContent=`Your Score is ${humanScore}, You lost.`
-                    log.console(humanScore);
-                }
+                
+                // if (computerScore>=5) {
+                //     finalScore.textContent=`Your Score is ${humanScore}, You lost.`
+                //     log.console(humanScore);
+                // }
                 break;
             } else {
-                showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You win! Paper beats Rock.`);
                 humanScore += 1;
-                if (computerScore>=5) {
-                    finalScore.textContent=`Your Score is ${humanScore}, You Win.`
-                }
+                showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You win! Paper beats Rock.`);
+                
+                // if (computerScore>=5) {
+                //     finalScore.textContent=`Your Score is ${humanScore}, You Win.`
+                // }
                 break;
             }
             
         case "PAPER":
             if (humanChoice=="ROCK") {
+                computerScore += 1;
                 showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You lose! Paper beats Rock.`);
                 console.log("You lose! Paper beats Rock")
-                computerScore += 1;
-                if (computerScore>=5) {
-                    finalScore.textContent=`Your Score is ${humanScore}, You lost.`
-                }
+                
+                // if (computerScore>=5) {
+                //     finalScore.textContent=`Your Score is ${humanScore}, You lost.`
+                // }
                 break;
             } else {
+                humanScore += 1;
                 showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You win! Scissor beats Paper.`);
                 console.log("You win! Scissor beats Paper.");
-                humanScore += 1;
-                if (computerScore>=5) {
-                    finalScore.textContent=`Your Score is ${humanScore}, You Win.`
-                }
+                
+                // if (computerScore>=5) {
+                //     finalScore.textContent=`Your Score is ${humanScore}, You Win.`
+                // }
                 break;
             }
 
         case "SCISSOR":
              if (humanChoice=="ROCK") {
+                humanScore += 1;
                 showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You win! Rock beats Scissor.`);
                 console.log("You win! Rock beats Scissor.");
-                humanScore += 1;
-                if (computerScore>=5) {
-                    finalScore.textContent=`Your Score is ${humanScore}, You win.`
-                }
+                
+                // if (computerScore>=5) {
+                //     finalScore.textContent=`Your Score is ${humanScore}, You win.`
+                // }
                 break;
             } else {
+                computerScore += 1;
                 showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You lose! Scissor beats Paper.`);
                 console.log("You lose! Scissor beats Paper.");
-                computerScore += 1;
-                if (computerScore>=5) {
-                    finalScore.textContent=`Your Score is ${humanScore}, You lost.`
-                }
+                
+                // if (computerScore>=5) {
+                //     finalScore.textContent=`Your Score is ${humanScore}, You lost.`
+                // }
                 break;
             }
           
@@ -107,8 +113,17 @@ function playGame() {
 function showResult(result) {
     const roundResult=document.createElement('p');
     roundResult.textContent=result;
-    resultDiv.appendChild(roundResult);
+    const finalScore=document.createElement('p');
+    if (computerScore>=5) {
+        finalScore.textContent=`Your Score is ${humanScore}, You lost.`
+    } else if (humanScore>=5) {
+        finalScore.textContent=`Your Score is ${humanScore}, You Win.`
+    } else {
+        finalScore.textContent=`Your current score is ${humanScore}.`
+    }
 
+    resultDiv.appendChild(roundResult);
+    resultDiv.appendChild(finalScore);
 }
 
 let humanScore=0;
@@ -116,7 +131,7 @@ let computerScore=0;
 
 const btnGroup=document.querySelector('#button-container');
 const resultDiv=document.createElement('div');
-// const finalScore=document.createElement('p');
+
 
 resultDiv.id='result'; //方便之後以id來設定CSS或找到此div
 btnGroup.after(resultDiv);
@@ -130,12 +145,4 @@ btnGroup.addEventListener('click',(e) => {
 
     playRound(humanSelection, computerSelection);
 })
-
-
-// console.log(`Your Score is ${humanScore}`);
-// if (computerScore > humanScore) {
-//     console.log('You lose the game')
-// } else if(computerScore < humanScore) {
-//     console.log('You Win the game!');
-// } else console.log('It\'s a tie');
 
