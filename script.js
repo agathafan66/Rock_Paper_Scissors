@@ -23,13 +23,13 @@ function getHumanChoice() {
 function playRound(humanChoice, computerChoice) {
     let play=["ROCK", "SCISSOR", "PAPER"];
     if (humanChoice==computerChoice) {
-        resultDiv.textContent=`You chose ${humanChoice}, computer chose ${computerChoice}, It's tied`;
+        showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, It's tied`);
         return console.log("It's tied");
     } 
     switch (computerChoice) {
         case "ROCK":
             if (humanChoice=="SCISSOR") {
-                resultDiv.textContent="You lose! Rock beats Scissor";
+                showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You lose! Rock beats Scissor.`);
                 console.log("You lose! Rock beats Scissor");
                 computerScore += 1;
                 if (computerScore>=5) {
@@ -38,8 +38,7 @@ function playRound(humanChoice, computerChoice) {
                 }
                 break;
             } else {
-                resultDiv.textContent="You win! Paper beats Rock.";
-                console.log("You win! Paper beats Rock.");
+                showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You win! Paper beats Rock.`);
                 humanScore += 1;
                 if (computerScore>=5) {
                     finalScore.textContent=`Your Score is ${humanScore}, You Win.`
@@ -49,7 +48,7 @@ function playRound(humanChoice, computerChoice) {
             
         case "PAPER":
             if (humanChoice=="ROCK") {
-                resultDiv.textContent="You lose! Paper beats Rock";
+                showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You lose! Paper beats Rock.`);
                 console.log("You lose! Paper beats Rock")
                 computerScore += 1;
                 if (computerScore>=5) {
@@ -57,7 +56,7 @@ function playRound(humanChoice, computerChoice) {
                 }
                 break;
             } else {
-                resultDiv.textContent="You win! Scissor beats Paper.";
+                showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You win! Scissor beats Paper.`);
                 console.log("You win! Scissor beats Paper.");
                 humanScore += 1;
                 if (computerScore>=5) {
@@ -68,7 +67,7 @@ function playRound(humanChoice, computerChoice) {
 
         case "SCISSOR":
              if (humanChoice=="ROCK") {
-                resultDiv.textContent="You win! Rock beats Scissor.";
+                showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You win! Rock beats Scissor.`);
                 console.log("You win! Rock beats Scissor.");
                 humanScore += 1;
                 if (computerScore>=5) {
@@ -76,7 +75,7 @@ function playRound(humanChoice, computerChoice) {
                 }
                 break;
             } else {
-                resultDiv.textContent="You lose! Scissor beats Paper.";
+                showResult(`You chose ${humanChoice}, computer chose ${computerChoice}, You lose! Scissor beats Paper.`);
                 console.log("You lose! Scissor beats Paper.");
                 computerScore += 1;
                 if (computerScore>=5) {
@@ -104,24 +103,30 @@ function playGame() {
         playRound(humanSelection, computerSelection);
     // }
 }
-// Create three buttons, one for each selection. Add an event listener to the buttons that call your playRound function with the correct playerSelection every time a button is clicked. (you can keep the console.logs for this step)
+
+function showResult(result) {
+    const roundResult=document.createElement('p');
+    roundResult.textContent=result;
+    resultDiv.appendChild(roundResult);
+
+}
+
 let humanScore=0;
 let computerScore=0;
 
 const btnGroup=document.querySelector('#button-container');
 const resultDiv=document.createElement('div');
-const finalScore=document.createElement('p');
+// const finalScore=document.createElement('p');
 
 resultDiv.id='result'; //方便之後以id來設定CSS或找到此div
 btnGroup.after(resultDiv);
-resultDiv.appendChild(finalScore);
-
+// resultDiv.appendChild(finalScore);
 
 btnGroup.addEventListener('click',(e) => {
     let humanSelection=e.target.textContent.toUpperCase();
     // console.log(humanSelection);
     let computerSelection= getComputerChoice();
-    resultDiv.textContent=`You chose ${humanSelection}, computer chose ${computerSelection}.`;
+    // resultDiv.textContent=`You chose ${humanSelection}, computer chose ${computerSelection}.`;
 
     playRound(humanSelection, computerSelection);
 })
